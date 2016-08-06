@@ -1,0 +1,10 @@
+.dancer img {
+    height: 100%;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    transform: translateX(-50%);
+    position: absolute;
+}
+.dancer { text-align: center; }
+.react-draggable-dragging .dancer { border-top: solid 2px red; border-bottom: solid 2px red; }
