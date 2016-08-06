@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import App from './App';
+import { Router, Route, browserHistory } from 'react-router';
+import { Scene, Scenes } from './App';
 import rootReducer from './reducers';
 import './index.css';
 
@@ -12,7 +13,10 @@ const store = createStore(rootReducer, { scenes: mockBackgrounds, dancers: mockD
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router history={browserHistory}>
+      <Route path='/' component={Scenes} />
+      <Route path='/:sceneId' component={Scene} />
+    </Router>
   </Provider>,
   document.getElementById('root')
 );
