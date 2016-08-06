@@ -7,16 +7,30 @@ import { Scene, Scenes } from './App';
 import rootReducer from './reducers';
 import './index.css';
 
+import DevTools from './DevTools';
+
 import mockBackgrounds from './backgrounds.json';
 import mockDancers from './dancers.json';
-const store = createStore(rootReducer, { scenes: mockBackgrounds, dancers: mockDancers });
+import { applyMiddleware, compose } from 'redux';
+import createLogger from 'redux-logger';
+const store = createStore(
+  rootReducer,
+  { scenes: mockBackgrounds, dancers: mockDancers },
+  compose(
+    applyMiddleware(createLogger()),
+    DevTools.instrument()
+  )
+);
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={browserHistory}>
-      <Route path='/' component={Scenes} />
-      <Route path='/:sceneId' component={Scene} />
-    </Router>
+    <div>
+      <Router history={browserHistory}>
+        <Route path='/' component={Scenes} />
+        <Route path='/:sceneId' component={Scene} />
+      </Router>
+      <DevTools />
+    </div>
   </Provider>,
   document.getElementById('root')
 );
