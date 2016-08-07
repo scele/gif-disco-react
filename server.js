@@ -19,7 +19,15 @@ app.use(allowCrossDomain);
 app.use(bodyParser.json());
 
 const BACKGROUNDS_FILE = 'content/backgrounds.json';
-const readBackgrounds = () => jsonfile.readFileSync(BACKGROUNDS_FILE);
+const readBackgrounds = () => {
+    let scenes = jsonfile.readFileSync(BACKGROUNDS_FILE)
+    fs.readdirSync('content/backgrounds/').forEach((file) => {
+        if (!scenes.find((scene) => scene.file === file))
+          scenes.push({ file: file, gifs: []});
+    });
+    scenes.forEach((s) => s.url = '/content/backgrounds/' + s.file);
+    return scenes;
+};
 const writeBackgrounds = (obj) => jsonfile.writeFileSync(BACKGROUNDS_FILE, obj, {spaces: 2});
 const readDancers = () => fs.readdirSync('content/dancers/').map((f) => `/content/dancers/${f}`);
 

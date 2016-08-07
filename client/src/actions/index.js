@@ -26,10 +26,12 @@ export const addDancer = (sceneId) => (dispatch) => {
 };
 
 export const saveScene = (sceneId, scene) => (dispatch) => {
+  let obj = Object.assign({}, scene);
+  delete obj.dirty;
   fetch(`/api/scenes/${sceneId}`, {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(scene)
+    body: JSON.stringify(obj)
   }).then(checkStatus)
     .then(() => dispatch(dirty(sceneId, false)));
 };

@@ -19,8 +19,9 @@ const Dancer = ({src, x, y, height, onDragged }) => {
       minWidth={100}
       minHeight={100}
       isResizable={{ top:true, right:false, bottom:true, left:false, topRight:false, bottomRight:false, bottomLeft:false, topLeft:false }}
-      bounds={'parent'}
       className="dancer"
+      canUpdateSizeByParent={true}
+      canUpdatePositionByParent={true}
     >
       <img src={src} alt="dancer" />
     </ResizableAndMovable>

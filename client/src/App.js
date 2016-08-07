@@ -5,18 +5,28 @@ import './App.css';
 import Dancer from './Dancer';
 import { moveDancer, addDancer, saveScene } from './actions';
 
-const Background = ({ width, scene, children }) => (
-  <div className="scene">
-    {children}
-    <img className="bg" src={scene.url} style={{width}} alt="background" />
-  </div>
-);
+const Background = ({ width, scene, children }) => {
+  let bg = <img className="bg" src={scene.url} style={{width}} alt="background" />;
+  if (scene.url.endsWith('.mp4')) {
+    bg = (
+      <video width={width} height={width / (1280/720)} src={scene.url} autoPlay loop>
+          Your browser does not support the video tag.
+      </video>
+    );
+  }
+  return (
+    <div className="scene">
+      {children}
+      {bg}
+    </div>
+  );
+};
 
 let SceneBase = ({ width, scene, dancers, onDancerDragged, onAddNewDancer, onSave }) => {
   if (typeof scene === 'undefined' || typeof dancers === 'undefined')
     return <div>Loading...</div>;
   return (
-    <div>
+    <div className="scene-outer">
       <Background width={width} scene={scene}>
         {scene.gifs.map((dancer, i) =>
           <Dancer
@@ -51,18 +61,23 @@ SceneBase = connect(
   })
 )(SceneBase);
 
-export let Scene = ({params}) => (<SceneBase width={800} params={params} />);
+export let SceneEditor = ({params}) => (
+  <div>
+    <SceneListing />
+    <SceneBase width={800} params={params} />
+  </div>);
 
-export let Scenes = ({ scenes }) => (
+export let SceneListing = ({ scenes }) => (
   <ul>
     {scenes.map((scene, i) =>
       <Link key={i} to={`/${i}`}>
-        <Background width={200} scene={scene} />
+        <Background width={200} scene={scene}>
+          <span className="label">{scene.dirty ? '* ' : ''}{scene.gifs.length}</span>
+        </Background>
       </Link>
     )}
   </ul>
 );
-Scenes = connect(
-  (state) => ({ scenes: state.scenes }),
-  { onDancerDragged: moveDancer }
-)(Scenes);
+SceneListing = connect(
+  (state) => ({ scenes: state.scenes })
+)(SceneListing);

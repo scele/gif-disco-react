@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { Router, Route, browserHistory } from 'react-router';
 import thunk from 'redux-thunk';
-import { Scene, Scenes } from './App';
+import { SceneEditor, SceneListing } from './App';
 import rootReducer from './reducers';
 import './index.css';
 import { loadScenes, loadDancers } from './actions';
@@ -27,8 +27,8 @@ ReactDOM.render(
   <Provider store={store}>
     <div>
       <Router history={browserHistory}>
-        <Route path='/' component={Scenes} />
-        <Route path='/:sceneId' component={Scene} />
+        <Route path='/' component={SceneListing} />
+        <Route path='/:sceneId' component={SceneEditor} />
       </Router>
       <DevTools />
     </div>
