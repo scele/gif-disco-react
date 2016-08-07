@@ -32,6 +32,8 @@ export default function scenes(state = [], action) {
     case 'MOVE_DANCER':
       console.log('dragDancer action', action);
       return state.map(s => scene(s, action));
+    case 'LOAD_SCENES_SUCCESS':
+      return action.response;
     default:
       return state;
   }

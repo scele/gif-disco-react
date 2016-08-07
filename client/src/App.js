@@ -12,8 +12,10 @@ const Background = ({ width, bg, children }) => (
   </div>
 );
 
-export let Scene = ({ width, bg, dancers, onDancerDragged }) => (
-  <Background width={width} bg={bg}>
+export let Scene = ({ width, bg, dancers, onDancerDragged }) => {
+  if (typeof bg === 'undefined')
+    return <div>Loading...</div>;
+  return <Background width={width} bg={bg}>
     {bg.gifs.map((dancer, i) =>
       <Dancer
         key={i}
@@ -25,7 +27,7 @@ export let Scene = ({ width, bg, dancers, onDancerDragged }) => (
       />
     )}
   </Background>
-);
+};
 
 Scene = withRouter(connect(
   (state, { params }) => ({
