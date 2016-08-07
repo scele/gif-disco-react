@@ -13,7 +13,7 @@ const Background = ({ width, scene, children }) => (
 );
 
 let SceneBase = ({ width, scene, dancers, onDancerDragged, onAddNewDancer, onSave }) => {
-  if (typeof scene === 'undefined')
+  if (typeof scene === 'undefined' || typeof dancers === 'undefined')
     return <div>Loading...</div>;
   return (
     <div>

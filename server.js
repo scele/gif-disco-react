@@ -18,11 +18,16 @@ app.use(allowCrossDomain);
 
 app.use(bodyParser.json());
 
-const BACKGROUNDS_FILE = 'client/src/backgrounds.json';
+const BACKGROUNDS_FILE = 'content/backgrounds.json';
 const readBackgrounds = () => jsonfile.readFileSync(BACKGROUNDS_FILE);
 const writeBackgrounds = (obj) => jsonfile.writeFileSync(BACKGROUNDS_FILE, obj, {spaces: 2});
+const readDancers = () => fs.readdirSync('content/dancers/').map((f) => `/content/dancers/${f}`);
 
 app.use('/content', express.static('content'));
+
+app.get('/api/dancers', (req, res) => {
+  res.json(readDancers());
+});
 
 app.get('/api/scenes', (req, res) => {
   res.json(readBackgrounds());

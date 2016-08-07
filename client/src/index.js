@@ -7,17 +7,13 @@ import thunk from 'redux-thunk';
 import { Scene, Scenes } from './App';
 import rootReducer from './reducers';
 import './index.css';
-import { loadScenes } from './actions';
-
+import { loadScenes, loadDancers } from './actions';
 import DevTools from './DevTools';
 
-//import mockBackgrounds from './backgrounds.json';
-import mockDancers from './dancers.json';
 import { applyMiddleware, compose } from 'redux';
 import createLogger from 'redux-logger';
 const store = createStore(
   rootReducer,
-  { scenes: [], dancers: mockDancers },
   compose(
     applyMiddleware(thunk, createLogger()),
     DevTools.instrument()
@@ -25,6 +21,7 @@ const store = createStore(
 );
 
 store.dispatch(loadScenes());
+store.dispatch(loadDancers());
 
 ReactDOM.render(
   <Provider store={store}>

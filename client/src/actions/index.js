@@ -62,3 +62,15 @@ export const loadScenes = () => (dispatch) => {
       });
     });
 };
+
+export const loadDancers = () => (dispatch) => {
+  fetch('/api/dancers', { headers: { 'Accept': 'application/json' } })
+    .then(checkStatus)
+    .then(parseJSON)
+    .then(response => {
+      return dispatch({
+        type: 'LOAD_DANCERS_SUCCESS',
+        response
+      });
+    });
+};
