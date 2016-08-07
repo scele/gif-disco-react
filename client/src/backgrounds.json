@@ -1,37 +1,88 @@
 [
   {
-    "duration": 5, 
-    "url": "/content/backgrounds/DrakeStill1.jpg", 
-    "maxVisible": 3, 
+    "duration": 5,
+    "url": "/content/backgrounds/DrakeStill1.jpg",
+    "maxVisible": 3,
     "gifs": [
       {
         "position": {
-          "bottom": 60.08, 
-          "left": 83.19327731092437
-        }, 
-        "height": 100
+          "left": 0.4625,
+          "top": 0.205
+        },
+        "height": 0.165
+      },
+      {
+        "position": {
+          "left": 0.27875,
+          "top": 0.31625
+        },
+        "height": 0.2
+      },
+      {
+        "position": {
+          "left": 0.37875,
+          "top": 0.325
+        },
+        "height": 0.2
+      },
+      {
+        "position": {
+          "left": 0.73375,
+          "top": 0.28875
+        },
+        "height": 0.2
+      },
+      {
+        "position": {
+          "left": 0.89375,
+          "top": 0.30375
+        },
+        "height": 0.24875
+      },
+      {
+        "position": {
+          "left": 0.515,
+          "top": 0.2675
+        },
+        "height": 0.18
+      },
+      {
+        "position": {
+          "left": 0.095,
+          "top": 0.28875
+        },
+        "height": 0.2525
+      },
+      {
+        "position": {
+          "left": 0.2925,
+          "top": 0.325
+        },
+        "height": 0.22375
       }
-    ]
-  }, 
+    ],
+    "dirty": true
+  },
   {
-    "duration": 5, 
-    "url": "/content/backgrounds/DrakeStill2.jpg", 
-    "maxVisible": 3, 
+    "duration": 5,
+    "url": "/content/backgrounds/DrakeStill2.jpg",
+    "maxVisible": 3,
     "gifs": [
       {
         "position": {
-          "left": 21.288515406162464, 
-          "bottom": 1.4040178571428572
-        }, 
-        "height": 391
-      }, 
+          "left": 0.975,
+          "top": 0.36625
+        },
+        "height": 0.2
+      },
       {
         "position": {
-          "left": 74.97665732959851, 
-          "bottom": 3.2611607142857144
-        }, 
-        "height": 391
+          "left": 0.7375,
+          "top": 0.3575
+        },
+        "height": 0.2
       }
-    ]
+    ],
+    "dirty": true
   }
 ]

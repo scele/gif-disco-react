@@ -1,6 +1,7 @@
 import express from 'express';
 import fs from 'fs';
 import jsonfile from 'jsonfile';
+import bodyParser from 'body-parser';
 
 const app = express();
 
@@ -15,10 +16,24 @@ const allowCrossDomain = function (req, res, next) {
 };
 app.use(allowCrossDomain);
 
+app.use(bodyParser.json());
+
+const BACKGROUNDS_FILE = 'client/src/backgrounds.json';
+const readBackgrounds = () => jsonfile.readFileSync(BACKGROUNDS_FILE);
+const writeBackgrounds = (obj) => jsonfile.writeFileSync(BACKGROUNDS_FILE, obj, {spaces: 2});
+
 app.use('/content', express.static('content'));
 
 app.get('/api/scenes', (req, res) => {
-  res.json(jsonfile.readFileSync('client/src/backgrounds.json'));
+  res.json(readBackgrounds());
+});
+
+app.post('/api/scenes/:sceneId', (req, res) => {
+  console.log(`Saving scene ${req.params.sceneId}:`, req.body);
+  let scenes = readBackgrounds();
+  scenes[req.params.sceneId] = req.body;
+  writeBackgrounds(scenes);
+  res.sendStatus(200);
 });
 
 app.listen(app.get('port'), () => {

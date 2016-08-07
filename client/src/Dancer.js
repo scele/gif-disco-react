@@ -9,16 +9,18 @@ export default class Dancer extends Component {
   }
   onResizeStop(direction, styleSize, clientSize, delta) {
       this.setState({ height: styleSize.height });
+      if (direction === 'top')
+        this.setState({ y: this.state.y - delta.height});
       this.props.onDragged(this.state.x, this.state.y, styleSize.height);
   }
   onDragStop(event, ui) {
-      this.setState({ x: ui.position.left + this.state.width / 2, y: ui.position.top + this.state.height });
+      this.setState({ x: ui.position.left + this.state.width / 2, y: ui.position.top });
       this.props.onDragged(this.state.x, this.state.y, this.state.height);
   }
   render() {
     return (
       <ResizableAndMovable
-        x={this.state.x}
+        x={this.state.x - this.state.width / 2}
         y={this.state.y}
         height={this.state.height}
         width={this.state.width}

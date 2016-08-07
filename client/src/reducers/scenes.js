@@ -1,17 +1,17 @@
 
 const defaultDancer = {
   position: {
-    left: 100,
-    bottom: 100
+    left: 0.5,
+    top: 0.1
   },
-  height: 100
+  height: 0.2
 };
 
 function dancer(state = defaultDancer, action) {
   switch (action.type) {
     case 'MOVE_DANCER':
       return {
-        position: { left: action.x, bottom: action.y },
+        position: { left: action.x, top: action.y },
         height: action.height,
       };
     default:
@@ -25,9 +25,9 @@ function scene(state, action) {
       return {
           ...state,
           gifs: [
-              ...state.gifs.slice(0, action.id),
-              dancer(state.gifs[action.id], action),
-              ...state.gifs.slice(action.id + 1)
+              ...state.gifs.slice(0, action.dancerId),
+              dancer(state.gifs[action.dancerId], action),
+              ...state.gifs.slice(action.dancerId + 1)
           ]
       };
     case 'ADD_DANCER':
@@ -38,6 +38,11 @@ function scene(state, action) {
           defaultDancer
         ]
       };
+    case 'SET_DIRTY':
+      return {
+        ...state,
+        dirty: action.dirty
+      };
     default:
       return state;
   }
@@ -47,8 +52,8 @@ export default function scenes(state = [], action) {
   switch (action.type) {
     case 'MOVE_DANCER':
     case 'ADD_DANCER':
-      console.log('dragDancer action', action);
-      return state.map(s => scene(s, action));
+    case 'SET_DIRTY':
+      return state.map((s, i) => i.toString() === action.sceneId ? scene(s, action) : s);
     case 'LOAD_SCENES_SUCCESS':
       return action.response;
     default:

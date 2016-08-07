@@ -1,17 +1,38 @@
 
-export const moveDancer = (id, x, y, height) => {
-  return {
-    type: 'MOVE_DANCER',
-    id, x, y, height
-  }
-}
+const dirty = (sceneId, dirty) => ({
+  type: 'SET_DIRTY',
+  sceneId,
+  dirty
+});
 
-export const addDancer = (sceneId) => {
-  return {
+export const moveDancer = (sceneId, dancerId, x, y, height) => (dispatch) => {
+  dispatch({
+    type: 'MOVE_DANCER',
+    sceneId,
+    dancerId,
+    x,
+    y,
+    height
+  });
+  dispatch(dirty(sceneId, true));
+};
+
+export const addDancer = (sceneId) => (dispatch) => {
+  dispatch({
     type: 'ADD_DANCER',
     sceneId,
-  }
-}
+  });
+  dispatch(dirty(sceneId, true));
+};
+
+export const saveScene = (sceneId, scene) => (dispatch) => {
+  fetch(`/api/scenes/${sceneId}`, {
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(scene)
+  }).then(checkStatus)
+    .then(() => dispatch(dirty(sceneId, false)));
+};
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -30,7 +51,7 @@ function parseJSON(response) {
 }
 
 export const loadScenes = () => (dispatch) => {
-  return fetch('/api/scenes', { headers: { 'Accept': 'application/json' } })
+  fetch('/api/scenes', { headers: { 'Accept': 'application/json' } })
     .then(checkStatus)
     .then(parseJSON)
     .then(response => {
