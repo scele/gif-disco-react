@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { Link, withRouter } from 'react-router';
 import './App.css';
 import Dancer from './Dancer';
 import { moveDancer } from './actions';
@@ -39,9 +39,9 @@ Scene = withRouter(connect(
 export let Scenes = ({ scenes }) => (
   <ul>
     {scenes.map((scene, i) =>
-      <a key={i} href={`/${i}`}>
+      <Link key={i} to={`/${i}`}>
         <Background width={200} bg={scene} />
-      </a>
+      </Link>
     )}
   </ul>
 );
