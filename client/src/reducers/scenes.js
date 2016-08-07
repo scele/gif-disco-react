@@ -1,5 +1,13 @@
 
-function gif(state, action) {
+const defaultDancer = {
+  position: {
+    left: 100,
+    bottom: 100
+  },
+  height: 100
+};
+
+function dancer(state = defaultDancer, action) {
   switch (action.type) {
     case 'MOVE_DANCER':
       return {
@@ -18,9 +26,17 @@ function scene(state, action) {
           ...state,
           gifs: [
               ...state.gifs.slice(0, action.id),
-              gif(state.gifs[action.id], action),
+              dancer(state.gifs[action.id], action),
               ...state.gifs.slice(action.id + 1)
           ]
+      };
+    case 'ADD_DANCER':
+      return {
+        ...state,
+        gifs: [
+          ...state.gifs,
+          defaultDancer
+        ]
       };
     default:
       return state;
@@ -30,6 +46,7 @@ function scene(state, action) {
 export default function scenes(state = [], action) {
   switch (action.type) {
     case 'MOVE_DANCER':
+    case 'ADD_DANCER':
       console.log('dragDancer action', action);
       return state.map(s => scene(s, action));
     case 'LOAD_SCENES_SUCCESS':

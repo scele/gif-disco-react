@@ -6,6 +6,13 @@ export const moveDancer = (id, x, y, height) => {
   }
 }
 
+export const addDancer = (sceneId) => {
+  return {
+    type: 'ADD_DANCER',
+    sceneId,
+  }
+}
+
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router';
 import './App.css';
 import Dancer from './Dancer';
-import { moveDancer } from './actions';
+import { moveDancer, addDancer } from './actions';
 
 const Background = ({ width, bg, children }) => (
   <div className="scene">
@@ -12,21 +12,28 @@ const Background = ({ width, bg, children }) => (
   </div>
 );
 
-export let Scene = ({ width, bg, dancers, onDancerDragged }) => {
+export let Scene = ({ width, bg, dancers, onDancerDragged, onAddNewDancer }) => {
   if (typeof bg === 'undefined')
     return <div>Loading...</div>;
-  return <Background width={width} bg={bg}>
-    {bg.gifs.map((dancer, i) =>
-      <Dancer
-        key={i}
-        src={dancers[i]}
-        onDragged={(...args) => onDancerDragged(i, ...args)}
-        x={100}
-        y={100}
-        height={200}
-      />
-    )}
-  </Background>
+  return (
+    <div>
+      <Background width={width} bg={bg}>
+        {bg.gifs.map((dancer, i) =>
+          <Dancer
+            key={i}
+            src={dancers[i]}
+            onDragged={(...args) => onDancerDragged(i, ...args)}
+            x={100}
+            y={100}
+            height={200}
+          />
+        )}
+      </Background>
+      <button onClick={ e => { e.preventDefault(); onAddNewDancer(); } }>
+        Add Dancer
+      </button>
+    </div>
+  );
 };
 
 Scene = withRouter(connect(
@@ -35,7 +42,10 @@ Scene = withRouter(connect(
     bg: state.scenes[params.sceneId],
     dancers: state.dancers,
   }),
-  { onDancerDragged: moveDancer }
+  (dispatch, { params }) => ({
+    onDancerDragged: moveDancer,
+    onAddNewDancer: () => dispatch(addDancer(params.sceneId))
+  })
 )(Scene));
 
 export let Scenes = ({ scenes }) => (
